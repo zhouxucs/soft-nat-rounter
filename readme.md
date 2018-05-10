@@ -16,8 +16,13 @@ iptables一共有3个table，分别是filter，nat和xxx。其中filter表是默
 
 同时，为了外网返回的报文能够回到内网，我们要允许主机转发发往192.168.1.0/24网段的地址
 
-    sudo iptables -A FORWARD -d 192.168.1.0/24 -j ACCEPT
-
+    sudo iptables -A FORWARD -d 192.168.1.0/24 -j ACCEPT
+    
+如果公网网卡是动态获得IP地址的，可以使用下面的方法设置：
+```
+    sudo iptables -t nat -A POSTROUTING -s ${INTERNAL_SUB_NET} -o ${WAN} -j MASQUERADE
+    sudo iptables -A FORWARD -i eth0 -o wlan0 -j ACCEPT
+```
 ## 2. 外网访问内网主机
 
 这里主要使用目的地址转换和端口映射
