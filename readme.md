@@ -1,3 +1,17 @@
+# 打开iptables开关
+编辑/etc/sysctl.conf文件：
+```
+vim /etc/sysctl.conf
+```
+加入如下配置：
+```
+net.ipv4.ip_forward=1
+```
+或者
+```
+sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+```
+
 iptables一共有3个table，分别是filter，nat和xxx。其中filter表是默认的表，如果不用-t参数指定，默认使用iptables命令时是对filter表进行修改。每个table有若干个chain，每个chain有若干个规则和一个policy。对iptables的配置就是针对某一个table的rru若干个chains，增加或者删除规则。
 
 # 配置NAT
